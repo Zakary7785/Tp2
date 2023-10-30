@@ -94,6 +94,7 @@ public class Main extends Application {
         formatTaille(lign3,par,15);
         var nom1= new Text(" Zakary Szekely");
         formatTaille(lign3,nom1,32);
+        //test
         var et= new Text("et");
         formatTaille(lign4,et,15);
         var nom2 = new Text(" Numa Trachel-Bourbeau");
