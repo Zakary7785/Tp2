@@ -1,6 +1,7 @@
 package ca.qc.bdeb.sim203.TP2;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
 import javafx.scene.paint.Paint;
@@ -27,6 +29,7 @@ public class Main extends Application {
      final double WIDTH=900;
      final double HEIGHT=520;
      BorderPane root=new BorderPane();
+     Stage stage= new Stage();
 
     @Override
     public void start(Stage stage)  {
@@ -40,12 +43,6 @@ public class Main extends Application {
         after you finish code that you wanna add:
         1: click commit click on what want to commit or add
         2: After you click push to send the code
-
-
-
-
-
-
          */
 
 
@@ -54,9 +51,15 @@ public class Main extends Application {
         root=setSceneMenu();
         var scene= new Scene(root,WIDTH,HEIGHT);
 
+        // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
 
-
-
+        scene.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.ESCAPE){
+                Platform.exit();
+            }else if (event.getCode()==KeyCode.D){
+                System.out.println("Mode débuggage");
+            }
+        });
 
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(logo);
@@ -140,8 +143,6 @@ public class Main extends Application {
         t.setFont(Font.font("Arial",FontWeight.BOLD,taille));
         box.getChildren().add(t);
         box.setAlignment(Pos.CENTER);
-
-
     }
 
 }
