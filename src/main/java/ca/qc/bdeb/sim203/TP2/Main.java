@@ -30,6 +30,25 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage)  {
+
+        /*
+        Le fonctionnement que GITHUB
+        if you want to get the latest code
+        1. click on fetch all remotes and then
+        2. update project
+
+        after you finish code that you wanna add:
+        1: click commit click on what want to commit or add
+        2: After you click push to send the code
+
+
+
+
+
+
+         */
+
+
         var logo= new Image("logo.png");
         root=new BorderPane();
         root=setSceneMenu();
