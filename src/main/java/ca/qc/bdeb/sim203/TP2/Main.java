@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim203.TP2;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -29,7 +30,6 @@ public class Main extends Application {
      final double WIDTH=900;
      final double HEIGHT=520;
      BorderPane root=new BorderPane();
-     Stage stage= new Stage();
 
     @Override
     public void start(Stage stage)  {
@@ -52,10 +52,19 @@ public class Main extends Application {
         var scene= new Scene(root,WIDTH,HEIGHT);
 
         // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
+        var timer = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+
+            }
+        };
+        timer.start();
 
         scene.setOnKeyPressed(event -> {
-            if(event.getCode()== KeyCode.ESCAPE){
+            if(event.getCode()== KeyCode.ESCAPE) {
                 Platform.exit();
+                timer.stop();
+
             }else if (event.getCode()==KeyCode.D){
                 System.out.println("Mode débuggage");
             }
