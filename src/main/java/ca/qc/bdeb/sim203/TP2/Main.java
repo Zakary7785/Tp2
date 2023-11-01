@@ -29,7 +29,8 @@ public class Main extends Application {
     }
      final double WIDTH=900;
      final double HEIGHT=520;
-     BorderPane root=new BorderPane();
+     private Scene sceneMenuStart;
+     private Scene sceneInfos;
 
     @Override
     public void start(Stage stage)  {
@@ -47,23 +48,18 @@ public class Main extends Application {
 
 
         var logo= new Image("logo.png");
-        root=new BorderPane();
-        root=setSceneMenu();
-        var scene= new Scene(root,WIDTH,HEIGHT);
+        var root=new BorderPane();
+        sceneMenuStart=setSceneMenu(stage);
+        sceneInfos=setSceneInfos(stage);
+
 
         // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
-        var timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
 
-            }
-        };
-        timer.start();
 
-        scene.setOnKeyPressed(event -> {
+        sceneMenuStart.setOnKeyPressed(event -> {
             if(event.getCode()== KeyCode.ESCAPE) {
                 Platform.exit();
-                timer.stop();
+
 
             }else if (event.getCode()==KeyCode.D){
                 System.out.println("Mode débuggage");
@@ -73,12 +69,12 @@ public class Main extends Application {
 
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(logo);
-        stage.setScene(scene);
+        stage.setScene(sceneMenuStart);
+        stage.setResizable(false);
         stage.show();
     }
-    public  BorderPane setSceneMenu(){
-
-        root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
+    public  Scene setSceneMenu(Stage stage){
+        var root = setPaneAvecBackground();
         var logo= new Image("logo.png");
         var logoView= new ImageView(logo);
         var jouer= new Button("Jouer!");
@@ -97,18 +93,20 @@ public class Main extends Application {
 
         });
         info.setOnAction(event -> {
-            root.getChildren().clear();
-            root=setSceneInfos();
+            stage.setScene(setSceneInfos(stage));
 
         });
+        return new Scene(root,WIDTH,HEIGHT);
+    }
+
+    private static BorderPane setPaneAvecBackground() {
+        var root= new BorderPane();
+        root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
         return root;
     }
-    public BorderPane setSceneJeu(){
 
-        return root;
-    }
-    public BorderPane setSceneInfos(){
-
+    public Scene setSceneInfos(Stage stage){
+        var root= setPaneAvecBackground();
         var mainbox= new VBox();
         mainbox.setSpacing(20);
         mainbox.setPadding(new Insets(20));
@@ -143,11 +141,10 @@ public class Main extends Application {
         mainbox.getChildren().addAll(lign1,lign2,lign3,lign4,lign5,lign6);
         root.setCenter(mainbox);
         retour.setOnAction(event -> {
-            root.getChildren().clear();
-            root=setSceneMenu();
+            stage.setScene(sceneMenuStart);
         });
 
-        return root;
+        return new Scene(root,WIDTH,HEIGHT);
     }
     private void formatTaille(HBox box,String s, double taille){
         var t= new Text(s);
