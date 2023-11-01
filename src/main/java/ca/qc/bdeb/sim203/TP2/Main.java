@@ -70,6 +70,7 @@ public class Main extends Application {
             }
         });
 
+
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(logo);
         stage.setScene(scene);
@@ -92,12 +93,18 @@ public class Main extends Application {
         zoneButton.setPadding(new Insets(10));
         jouer.setOnAction(event -> {
                 System.out.println("PASSER AU NIVEAU 1");
+                root.getChildren().clear();
+
         });
         info.setOnAction(event -> {
             root.getChildren().clear();
             root=setSceneInfos();
 
         });
+        return root;
+    }
+    public BorderPane setSceneJeu(){
+
         return root;
     }
     public BorderPane setSceneInfos(){
@@ -111,8 +118,7 @@ public class Main extends Application {
         var lign4= new HBox();
         var lign5= new HBox();
         var lign6= new HBox();
-        var titreJeu= new Text(" Charlotte la Barbotte");
-        formatTaille(lign1,titreJeu,50.0);
+        formatTaille(lign1," Charlotte la Barbotte",50.0);
         var r= new Random();
         var rnd=r.nextInt(1,6);
         var imagePoisson= new Image("poisson"+rnd+".png");
@@ -121,15 +127,10 @@ public class Main extends Application {
         imageVPoisson.setFitWidth(WIDTH/5);
         lign2.getChildren().add(imageVPoisson);
         lign2.setAlignment(Pos.CENTER);
-        var par= new Text("Par");
-        formatTaille(lign3,par,15);
-        var nom1= new Text(" Zakary Szekely");
-        formatTaille(lign3,nom1,32);
-        //test
-        var et= new Text("et");
-        formatTaille(lign4,et,15);
-        var nom2 = new Text(" Numa Trachel-Bourbeau");
-        formatTaille(lign4,nom2,32);
+        formatTaille(lign3,"Par",15);
+        formatTaille(lign3," Zakary Szekely",32);
+        formatTaille(lign4,"et",15);
+        formatTaille(lign4,"Numa Trachel-Bourbeau",32);
         var flowDescrip= new TextFlow();
         var descript= new Text(" Travail remis à Nicolas Hubertise. Graphismes adaptées de https://game-icons.net/ et de hhtps://openclipart.org/. Développé dans le cadre du cours 420-203-RE - Développement" +
                 " de programmes dans un environnement graphique, au Collège de Bois-de-Boulogne.");
@@ -148,7 +149,8 @@ public class Main extends Application {
 
         return root;
     }
-    private void formatTaille(HBox box,Text t, double taille){
+    private void formatTaille(HBox box,String s, double taille){
+        var t= new Text(s);
         t.setFont(Font.font("Arial",FontWeight.BOLD,taille));
         box.getChildren().add(t);
         box.setAlignment(Pos.CENTER);
