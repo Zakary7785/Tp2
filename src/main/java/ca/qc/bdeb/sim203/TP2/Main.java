@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -89,7 +90,7 @@ public class Main extends Application {
         zoneButton.setPadding(new Insets(10));
         jouer.setOnAction(event -> {
                 System.out.println("PASSER AU NIVEAU 1");
-                root.getChildren().clear();
+
 
         });
         info.setOnAction(event -> {
@@ -103,6 +104,13 @@ public class Main extends Application {
         var root= new BorderPane();
         root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
         return root;
+    }
+    public void ecranDeJeu(Stage stage){
+        var root= new Pane();
+        var canvas= new Canvas(WIDTH,HEIGHT);
+        var context= canvas.getGraphicsContext2D();
+
+
     }
 
     public Scene setSceneInfos(Stage stage){
