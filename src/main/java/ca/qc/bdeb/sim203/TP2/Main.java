@@ -28,14 +28,13 @@ public class Main extends Application {
 
        launch(args);
     }
-     final double WIDTH=900;
-     final double HEIGHT=520;
-     private Scene sceneMenuStart;
-     private Scene sceneInfos;
+     public static final double WIDTH=900;
+     public static final double HEIGHT=520;
+     private Stage stage;
 
     @Override
     public void start(Stage stage)  {
-
+this.stage=stage;
         /*
         Le fonctionnement que GITHUB
         if you want to get the latest code
@@ -46,36 +45,25 @@ public class Main extends Application {
         1: click commit click on what want to commit or add
         2: After you click push to send the code
          */
-
+        stage.setScene(setSceneMenu());
 
         var logo= new Image("logo.png");
         var root=new BorderPane();
-        sceneMenuStart=setSceneMenu(stage);
-        sceneInfos=setSceneInfos(stage);
+
 
 
         // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
 
 
-        sceneMenuStart.setOnKeyPressed(event -> {
-            if(event.getCode()== KeyCode.ESCAPE) {
-                Platform.exit();
-
-
-            }else if (event.getCode()==KeyCode.D){
-                System.out.println("Mode débuggage");
-            }
-        });
-
 
         stage.setTitle("Charlotte la Barbotte");
         stage.getIcons().add(logo);
-        stage.setScene(sceneMenuStart);
         stage.setResizable(false);
         stage.show();
     }
-    public  Scene setSceneMenu(Stage stage){
+    public  Scene setSceneMenu(){
         var root = setPaneAvecBackground();
+        var scene= new Scene(root,WIDTH,HEIGHT);
         var logo= new Image("logo.png");
         var logoView= new ImageView(logo);
         var jouer= new Button("Jouer!");
@@ -88,6 +76,15 @@ public class Main extends Application {
         logoView.setPreserveRatio(true);
         root.setBottom(zoneButton);
         zoneButton.setPadding(new Insets(10));
+        scene.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.ESCAPE) {
+                Platform.exit();
+
+
+            }else if (event.getCode()==KeyCode.D){
+                System.out.println("Mode débuggage");
+            }
+        });
         jouer.setOnAction(event -> {
                 System.out.println("PASSER AU NIVEAU 1");
 
@@ -97,7 +94,7 @@ public class Main extends Application {
             stage.setScene(setSceneInfos(stage));
 
         });
-        return new Scene(root,WIDTH,HEIGHT);
+        return scene;
     }
 
     private static BorderPane setPaneAvecBackground() {
@@ -105,12 +102,22 @@ public class Main extends Application {
         root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
         return root;
     }
-    public void ecranDeJeu(Stage stage){
+    public Scene ecranDeJeu(Stage stage){
         var root= new Pane();
+        var scene= new Scene(root,WIDTH,HEIGHT);
         var canvas= new Canvas(WIDTH,HEIGHT);
         var context= canvas.getGraphicsContext2D();
+        AnimationTimer timer= new AnimationTimer() {
+            long lastTime=System.nanoTime();
 
+            @Override
+            public void handle(long now) {
+                double dt=(now-lastTime)*1e-9;
+            }
 
+        };
+
+ return scene;
     }
 
     public Scene setSceneInfos(Stage stage){
@@ -149,7 +156,7 @@ public class Main extends Application {
         mainbox.getChildren().addAll(lign1,lign2,lign3,lign4,lign5,lign6);
         root.setCenter(mainbox);
         retour.setOnAction(event -> {
-            stage.setScene(sceneMenuStart);
+            stage.setScene(setSceneMenu());
         });
 
         return new Scene(root,WIDTH,HEIGHT);

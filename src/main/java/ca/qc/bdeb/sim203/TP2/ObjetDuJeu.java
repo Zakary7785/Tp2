@@ -1,7 +1,15 @@
 package ca.qc.bdeb.sim203.TP2;
 
-public class ObjetDuJeu {
-    private double x,y,vy,vx,ax,ay,w,h;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+
+public abstract class ObjetDuJeu {
+    protected double x,y,vy,vx,vMax,ax,ay,w,h;
+    protected boolean bouge,isInvinsible;
+    protected int vie;
+    protected Image image;
+
+
 
     public void update(double deltaTemps) {
         updatePhysique(deltaTemps);
@@ -14,6 +22,7 @@ public class ObjetDuJeu {
         x += deltaTemps * vx;
         y += deltaTemps * vy;
     }
+   public abstract void draw(GraphicsContext context);
     public double getHaut() {
         return y;
     }
