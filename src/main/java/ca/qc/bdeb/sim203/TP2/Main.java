@@ -109,7 +109,29 @@ this.stage=stage;
         for (int i=1;i< compo.length;i++) {
             compo[i]=new Ennemi(1);
         }*/
-        AnimationTimer timer = getAnimationTimer(c, context);
+        AnimationTimer timer = new AnimationTimer() {
+            private long lastTime= System.nanoTime();
+            @Override
+            public void handle(long now) {
+
+                    if (lastTime == 0) {
+                        lastTime = now;
+                        return;
+                    }
+                    double dt = (now - lastTime) * 1e-9;
+                System.out.println(dt);
+                    c.update(dt);
+                    context.clearRect(0,0,WIDTH,HEIGHT);
+                    context.setFill(Paint.valueOf("#2A7FFF"));
+                    context.fillRect(0,0,WIDTH,HEIGHT);
+                    c.draw(context);
+                    lastTime=now;
+                }
+
+            };
+        timer.start();
+
+
         scene.setOnKeyPressed(event -> {
             if(event.getCode()== KeyCode.ESCAPE){
                 stage.setScene(setSceneMenu());
@@ -125,29 +147,8 @@ this.stage=stage;
  return scene;
     }
 
-    private static AnimationTimer getAnimationTimer(Charlotte c ,GraphicsContext context) {
-        AnimationTimer timer= new AnimationTimer() {
-            private long lastTime=System.nanoTime();
 
-            @Override
-            public void handle(long now) {
-                if (lastTime == 0) {
-                    lastTime = now;
-                    return;
-                }
-                double dt = (now - lastTime) * 1e-9;
-                c.update(dt);
-                context.clearRect(0,0,WIDTH,HEIGHT);
-                context.setFill(Paint.valueOf("#2A7FFF"));
-                context.fillRect(0,0,WIDTH,HEIGHT);
-                c.draw(context);
 
-            }
-
-        };
-        timer.start();
-        return timer;
-    }
 
     public Scene setSceneInfos(Stage stage){
         var root= setPaneAvecBackground();

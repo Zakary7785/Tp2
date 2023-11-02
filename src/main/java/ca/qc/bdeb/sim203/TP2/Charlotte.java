@@ -44,8 +44,52 @@ public class Charlotte extends ObjetDuJeu{
         var right= Input.isKeyPressed(KeyCode.RIGHT);
         var up= Input.isKeyPressed(KeyCode.UP);
         var down= Input.isKeyPressed(KeyCode.DOWN);
-        mouvement(dt, left, right,true,vx);
-        mouvement(dt,up,down,false,vy);
+        bouge=ax!=0||ay!=0;
+        if (left) {
+            ax = -1000;
+        } else if (right) {
+            ax = 1000;
+        } else {
+            ax = 0;
+            int signeVitesse = vx > 0 ? 1 : -1;
+            double vitesseAmortissementX = -signeVitesse * 500;
+            vx += dt * vitesseAmortissementX;
+
+            int nouveauSigneVitesse = vx > 0 ? 1 : -1;
+
+            if(nouveauSigneVitesse != signeVitesse) {
+                vx = 0;
+            }
+        }
+
+        bouge=ax!=0||ay!=0;
+        if (up) {
+            ay = -1000;
+        } else if (down) {
+            ay = 1000;
+        } else {
+            ay = 0;
+
+            int signeVitesse = vy > 0 ? 1 : -1;
+            double vitesseAmortissementX = -signeVitesse * 500;
+            vy += dt * vitesseAmortissementX;
+
+            int nouveauSigneVitesse = vy > 0 ? 1 : -1;
+
+            if(nouveauSigneVitesse != signeVitesse) {
+                vy = 0;
+            }
+        }
+        if(vy> vMax)
+            vy = 300;
+        else if(vy < -1*vMax)
+            vy = -300;
+        if(vx> vMax)
+            vx = 300;
+        else if(vx < -1*vMax)
+            vx = -300;
+
+
 
         /*mouvement(dt, left, right,true,vx);
         mouvement(dt,up,down,false,vy);*/
@@ -60,6 +104,7 @@ public class Charlotte extends ObjetDuJeu{
         //moveX verifie si on bouge en x ou pas et cela determine l'affectation de v et a a vx, ax ou ay,vy
         // direction 1 est soit gauche ou up et direction 2 est soit droite ou bas
         double a;
+        bouge=ax!=0||ay!=0;
         if (direction1) {
             a = -1000;
         } else if (direction2) {
@@ -79,7 +124,7 @@ public class Charlotte extends ObjetDuJeu{
         }
         if(v> vMax)
             v = 300;
-        else if(v < -vMax)
+        else if(v < -1*vMax)
             v = -300;
         
         if (moveX&&(direction1||direction2)){
