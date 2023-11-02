@@ -5,8 +5,10 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends ObjetDuJeu{
-   private Image imageBlesse;
-   private Image imageMouvement;
+   private final Image imageBlesse;
+   private final Image imageMouvement;
+    protected boolean bouge,isInvinsible;
+    protected int vie;
     public Charlotte() {
         this.vie=4;
         this.bouge=false;
@@ -42,13 +44,14 @@ public class Charlotte extends ObjetDuJeu{
         var right= Input.isKeyPressed(KeyCode.RIGHT);
         var up= Input.isKeyPressed(KeyCode.UP);
         var down= Input.isKeyPressed(KeyCode.DOWN);
-
-        mouvement(dt, left, right,true,ax,vx);
-        mouvement(dt,left,right,false,ay,vy);
+        mouvement(dt, left, right,true,vx);
+        mouvement(dt,up,down,false,vy);
+        updatePhysique(dt);
     }
 
-    private void mouvement(double dt, boolean direction1, boolean direction2,boolean move,double a, double v) {
-
+    private void mouvement(double dt, boolean direction1, boolean direction2,boolean moveX, double v) {
+        //moveX verifie si on bouge en x ou pas et cela determine l'affectation de v et a a vx, ax ou ay,vy
+        double a;
         if (direction1) {
             a = -1000;
         } else if (direction2) {
@@ -69,7 +72,7 @@ public class Charlotte extends ObjetDuJeu{
             v = 300;
         else if(v < -300)
             v = -300;
-        if (move){
+        if (moveX){
             this.vx=v;
             this.ax=a;
         }
@@ -77,7 +80,7 @@ public class Charlotte extends ObjetDuJeu{
             this.vy=v;
             this.ay=a;
         }
-        updatePhysique(dt);
+
     }
 }
 

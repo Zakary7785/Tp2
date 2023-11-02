@@ -4,9 +4,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public abstract class ObjetDuJeu {
-    protected double x,y,vy,vx,vMax,ax,ay,w,h;
-    protected boolean bouge,isInvinsible;
-    protected int vie;
+    protected double x,y,vy,vx,vMax,ax,ay;
+    protected int w,h;
+
     protected Image image;
 
 
