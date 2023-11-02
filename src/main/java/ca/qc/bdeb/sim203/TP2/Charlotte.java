@@ -57,8 +57,13 @@ public class Charlotte extends ObjetDuJeu {
             //niveau completeeeeeeeeeeeeeeee
             x=0;
         }
-        if (getHaut()>Main.HEIGHT){
-
+        if (getBas()>Main.HEIGHT){
+            y=Main.HEIGHT;
+            ay=-ay;
+        }
+        if(getHaut()<Main.HEIGHT){
+            y=0;
+            ay=-ay;
         }
 
         System.out.println("x " + x + "\t" + "y " + y);
