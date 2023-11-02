@@ -48,10 +48,6 @@ this.stage=stage;
         stage.setScene(setSceneMenu());
 
         var logo= new Image("logo.png");
-        var root=new BorderPane();
-
-
-
         // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
 
 
@@ -113,6 +109,7 @@ this.stage=stage;
             @Override
             public void handle(long now) {
                 double dt=(now-lastTime)*1e-9;
+
             }
 
         };
