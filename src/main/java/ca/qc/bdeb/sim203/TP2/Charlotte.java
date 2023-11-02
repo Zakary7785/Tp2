@@ -63,7 +63,7 @@ public class Charlotte extends ObjetDuJeu {
             y=Main.HEIGHT-h;
             ay=-ay;
         }
-        if(getHaut()<Main.HEIGHT){
+        if(getHaut()<0){
             y=0;
             ay=-ay;
         }

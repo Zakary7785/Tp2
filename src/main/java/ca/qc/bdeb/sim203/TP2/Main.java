@@ -101,14 +101,7 @@ this.stage=stage;
         var canvas= new Canvas(WIDTH,HEIGHT);
         var context= canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
-        Random r= new Random();
-        var c= new Charlotte();
-        /*
-        ObjetDuJeu[] compo= new ObjetDuJeu [1+r.nextInt(1,6)];
-        compo[0]= new Charlotte();
-        for (int i=1;i< compo.length;i++) {
-            compo[i]=new Ennemi(1);
-        }*/
+        var game= new Game();
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime= System.nanoTime();
             @Override
@@ -119,12 +112,11 @@ this.stage=stage;
                         return;
                     }
                     double dt = (now - lastTime) * 1e-9;
-                System.out.println(dt);
-                    c.update(dt);
+                    game.update(dt);
                     context.clearRect(0,0,WIDTH,HEIGHT);
-                    context.setFill(Paint.valueOf("#2A7FFF"));
+                    context.setFill(game.getCurrentCouleur());
                     context.fillRect(0,0,WIDTH,HEIGHT);
-                    c.draw(context);
+                    game.draw(context);
                     lastTime=now;
                 }
 

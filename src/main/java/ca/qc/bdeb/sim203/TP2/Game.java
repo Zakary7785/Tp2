@@ -1,17 +1,22 @@
 package ca.qc.bdeb.sim203.TP2;
 
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
-public class Niveau {
+public class Game {
     private Charlotte charlotte;
     private Baril baril;
     private ObjetDuJeu[]objets;
     private int level=0;
+
     private int vieBarre;
     boolean fini;
-
-    public Niveau(double dt) {
+    private Color currentCouleur;
+    public Game() {
         Random r= new Random();
+        this.currentCouleur= Color.hsb(r.nextDouble(190,271),0.84,1);
         this.charlotte = new Charlotte();
         this.baril= new Baril();
         baril.setX(r.nextDouble(Main.WIDTH/5,(Main.WIDTH*4)/5));
@@ -19,6 +24,7 @@ public class Niveau {
         for (int i = 0; i < objets.length; i++) {
             objets[i]=new Ennemi(level);
         }
+
         this.level +=1;
         this.vieBarre = 4;
         this.fini=false;
@@ -30,17 +36,17 @@ public class Niveau {
             o.update(dt);
         }
     }
+    public void draw(GraphicsContext context){
 
-    public Baril getBaril() {
-        return baril;
+        charlotte.draw(context);
+        baril.draw(context);
+        for (ObjetDuJeu o: objets) {
+            o.draw(context);
+        }
     }
 
-    public ObjetDuJeu[] getObjets() {
-        return objets;
-    }
-
-    public void setObjets(ObjetDuJeu[] objets) {
-        this.objets = objets;
+    public Color getCurrentCouleur() {
+        return currentCouleur;
     }
 
     public Charlotte getCharlotte() {
@@ -51,13 +57,6 @@ public class Niveau {
         this.charlotte = charlotte;
     }
 
-    public ObjetDuJeu[] getObjet() {
-        return objets;
-    }
-
-    public void setObjet(ObjetDuJeu[] objet) {
-        this.objets = objet;
-    }
 
     public int getLevel() {
         return level;
