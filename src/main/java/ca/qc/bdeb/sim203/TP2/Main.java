@@ -8,6 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -81,15 +82,11 @@ this.stage=stage;
                 System.out.println("Mode débuggage");
             }
         });
-        jouer.setOnAction(event -> {
-                System.out.println("PASSER AU NIVEAU 1");
-
-
-        });
-        info.setOnAction(event -> {
-            stage.setScene(setSceneInfos(stage));
-
-        });
+        jouer.setOnAction(event ->{
+            stage.setScene(setEcranDeJeu());
+                }
+        );
+        info.setOnAction(event -> stage.setScene(setSceneInfos(stage)));
         return scene;
     }
 
@@ -98,23 +95,58 @@ this.stage=stage;
         root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
         return root;
     }
-    public Scene ecranDeJeu(Stage stage){
+    public Scene setEcranDeJeu(){
         var root= new Pane();
         var scene= new Scene(root,WIDTH,HEIGHT);
         var canvas= new Canvas(WIDTH,HEIGHT);
         var context= canvas.getGraphicsContext2D();
+        root.getChildren().add(canvas);
+        Random r= new Random();
+        var c= new Charlotte();
+        /*
+        ObjetDuJeu[] compo= new ObjetDuJeu [1+r.nextInt(1,6)];
+        compo[0]= new Charlotte();
+        for (int i=1;i< compo.length;i++) {
+            compo[i]=new Ennemi(1);
+        }*/
+        AnimationTimer timer = getAnimationTimer(c, context);
+        scene.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.ESCAPE){
+                stage.setScene(setSceneMenu());
+            timer.stop();
+            } else if (event.getCode()==KeyCode.D) {
+                System.out.println("mode débugage");
+            } else {
+                Input.setKeyPressed(event.getCode(),true);
+            }
+        });
+        scene.setOnKeyReleased(event -> Input.setKeyPressed(event.getCode(),false));
+
+ return scene;
+    }
+
+    private static AnimationTimer getAnimationTimer(Charlotte c ,GraphicsContext context) {
         AnimationTimer timer= new AnimationTimer() {
-            long lastTime=System.nanoTime();
+            private long lastTime=System.nanoTime();
 
             @Override
             public void handle(long now) {
-                double dt=(now-lastTime)*1e-9;
+                if (lastTime == 0) {
+                    lastTime = now;
+                    return;
+                }
+                double dt = (now - lastTime) * 1e-9;
+                c.update(dt);
+                context.clearRect(0,0,WIDTH,HEIGHT);
+                context.setFill(Paint.valueOf("#2A7FFF"));
+                context.fillRect(0,0,WIDTH,HEIGHT);
+                c.draw(context);
 
             }
 
         };
-
- return scene;
+        timer.start();
+        return timer;
     }
 
     public Scene setSceneInfos(Stage stage){
@@ -152,9 +184,7 @@ this.stage=stage;
         lign6.getChildren().add(retour);
         mainbox.getChildren().addAll(lign1,lign2,lign3,lign4,lign5,lign6);
         root.setCenter(mainbox);
-        retour.setOnAction(event -> {
-            stage.setScene(setSceneMenu());
-        });
+        retour.setOnAction(event -> stage.setScene(setSceneMenu()));
 
         return new Scene(root,WIDTH,HEIGHT);
     }
