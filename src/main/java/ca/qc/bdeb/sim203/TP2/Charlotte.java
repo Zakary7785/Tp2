@@ -1,10 +1,14 @@
 package ca.qc.bdeb.sim203.TP2;
 
+import ca.qc.bdeb.sim203.TP2.projectiles.Etoiles;
+import ca.qc.bdeb.sim203.TP2.projectiles.Projectile;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends ObjetDuJeu {
+    private Projectile arme;
+    private double vMax;
     private final Image imageBlesse;
     private final Image imageMouvement;
     protected boolean bouge, isInvinsible;
@@ -12,6 +16,7 @@ public class Charlotte extends ObjetDuJeu {
     protected int vie;
 
     public Charlotte() {
+        this.arme= new Etoiles();
         this.vie = 4;
         this.bouge = false;
         this.isInvinsible = false;
@@ -51,24 +56,23 @@ public class Charlotte extends ObjetDuJeu {
         mouvement(dt, left, right, true, vx);
         mouvement(dt, up, down, false, vy);
         updatePhysique(dt);
-        if(x<0){
-            x=0;
-            vx=-vx;
+        if (x < 0) {
+            x = 0;
+            vx = -vx / 2;
         }
-        if(getDroite()>Main.WIDTH){
+        if (getDroite() > Main.WIDTH) {
             //niveau completeeeeeeeeeeeeeeee
-            x=0;
+            x = 0;
         }
-        if (getBas()>Main.HEIGHT){
-            y=Main.HEIGHT-h;
-            ay=-ay;
+        if (getBas() > Main.HEIGHT) {
+            y = Main.HEIGHT - h;
+            ay = -ay;
         }
-        if(getHaut()<0){
-            y=0;
-            ay=-ay;
+        if (getHaut() < 0) {
+            y = 0;
+            ay = -ay;
         }
 
-        System.out.println("x " + x + "\t" + "y " + y);
     }
 
 

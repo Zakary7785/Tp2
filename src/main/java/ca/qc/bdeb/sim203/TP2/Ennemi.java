@@ -26,8 +26,7 @@ public class Ennemi extends ObjetDuJeu {
     }
     @Override
     public void update(double dt){
-        x=x;
-        y=y;
+        updatePhysique(dt);
 
     }
 }
