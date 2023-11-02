@@ -10,6 +10,11 @@ public abstract class ObjetDuJeu {
     protected Image image;
 
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+
 
     public void update(double deltaTemps) {
         updatePhysique(deltaTemps);
