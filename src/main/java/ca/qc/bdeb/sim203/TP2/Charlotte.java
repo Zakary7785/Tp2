@@ -8,6 +8,7 @@ public class Charlotte extends ObjetDuJeu {
     private final Image imageBlesse;
     private final Image imageMouvement;
     protected boolean bouge, isInvinsible;
+    protected boolean finiNiveau;
     protected int vie;
 
     public Charlotte() {
@@ -50,6 +51,16 @@ public class Charlotte extends ObjetDuJeu {
         mouvement(dt, left, right, true, vx);
         mouvement(dt, up, down, false, vy);
         updatePhysique(dt);
+        if(x<0)
+            x=0;
+        if(getDroite()>Main.WIDTH){
+            //niveau completeeeeeeeeeeeeeeee
+            x=0;
+        }
+        if (getHaut()>Main.HEIGHT){
+
+        }
+
         System.out.println("x " + x + "\t" + "y " + y);
     }
 
