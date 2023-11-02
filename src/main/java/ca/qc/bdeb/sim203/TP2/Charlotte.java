@@ -51,14 +51,16 @@ public class Charlotte extends ObjetDuJeu {
         mouvement(dt, left, right, true, vx);
         mouvement(dt, up, down, false, vy);
         updatePhysique(dt);
-        if(x<0)
+        if(x<0){
             x=0;
+            vx=-vx;
+        }
         if(getDroite()>Main.WIDTH){
             //niveau completeeeeeeeeeeeeeeee
             x=0;
         }
         if (getBas()>Main.HEIGHT){
-            y=Main.HEIGHT;
+            y=Main.HEIGHT-h;
             ay=-ay;
         }
         if(getHaut()<Main.HEIGHT){
