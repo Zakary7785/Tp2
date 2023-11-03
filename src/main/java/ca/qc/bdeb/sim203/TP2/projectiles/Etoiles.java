@@ -14,12 +14,14 @@ public class Etoiles extends Projectile {
         this.ax=0;
         this.w=36;
         this.h=35;
+
     }
     @Override
     public   void update(double dt){
-        if(isVisible())
-            x=dt*vx;
-        if(getDroite()> Main.WIDTH)
+        if(isVisible()){
+            x+=dt*vx;
+        }
+        if(getGauche()> Main.WIDTH&&isVisible())
             setVisible(false);
     }
 

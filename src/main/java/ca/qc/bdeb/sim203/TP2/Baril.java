@@ -8,7 +8,7 @@ public class Baril extends ObjetDuJeu{
     private Projectile projectile;
     private Image barilOuvert;
     private boolean isOuvert;
-    private double tempsLancement;// le temps quand le niveau a ete lance
+    private  final double tempsLancement;// le temps quand le niveau a ete lance
     public Baril() {
         this.y=0;
         this.h=83;
@@ -27,6 +27,7 @@ public class Baril extends ObjetDuJeu{
     @Override
     public void update(double dt){
        y=(Main.HEIGHT - h)/2 * Math.sin( 2*Math.PI*((System.nanoTime()*1e-9)-tempsLancement)/3) + (Main.HEIGHT - h)/2;
+
     }
 
 }

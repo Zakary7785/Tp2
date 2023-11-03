@@ -35,7 +35,17 @@ public class Charlotte extends ObjetDuJeu {
 
     }
 
+    public Projectile getArme() {
+        return arme;
+    }
+
+    public void setArme(Projectile arme) {
+        this.arme = arme;
+    }
+
     public void attaque(){
+        arme.setX(getGauche()+w/2);
+        arme.setY(getHaut()+h/2);
         arme.setVisible(true);
     }
     public void nouvelleArme(){

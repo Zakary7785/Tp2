@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class Ennemi extends ObjetDuJeu {
+    private boolean dead;
     public Ennemi(int level) {
         Random r = new Random();
         this.image=new Image("poisson"+r.nextInt(1,6)+".png");
@@ -21,12 +22,11 @@ public class Ennemi extends ObjetDuJeu {
 
     @Override
     public void draw(GraphicsContext context) {
-        context.drawImage(image,x,y);
-
+        if(!dead)
+            context.drawImage(image,x,y);
     }
     @Override
     public void update(double dt){
         updatePhysique(dt);
-
     }
 }

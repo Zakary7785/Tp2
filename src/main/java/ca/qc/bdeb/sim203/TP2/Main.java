@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -124,6 +125,7 @@ public class Main extends Application {
                 context.clearRect(0, 0, WIDTH, HEIGHT);
                 context.setFill(game.getCurrentCouleur());
                 context.fillRect(0, 0, WIDTH, HEIGHT);
+
                 game.draw(context);
                 lastTime = now;
                 if(game.getCharlotte().getDroite()>=WIDTH)
@@ -140,6 +142,10 @@ public class Main extends Application {
                 timer.stop();
             } else if (event.getCode() == KeyCode.D) {
                 System.out.println("mode débugage");
+            } else if (event.getCode()==KeyCode.SPACE) {
+                game.getCharlotte().attaque();
+
+
             } else {
                 Input.setKeyPressed(event.getCode(), true);
             }

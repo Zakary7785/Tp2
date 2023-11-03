@@ -13,7 +13,9 @@ public abstract class ObjetDuJeu {
     public void setX(double x) {
         this.x = x;
     }
-
+    public void setY(double y) {
+        this.y = y;
+    }
 
 
     public void update(double deltaTemps) {
@@ -41,4 +43,7 @@ public abstract class ObjetDuJeu {
         return x + w;
     }
 
+    public Image getImage() {
+        return image;
+    }
 }
