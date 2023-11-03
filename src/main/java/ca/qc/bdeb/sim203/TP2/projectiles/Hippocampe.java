@@ -9,11 +9,9 @@ public class Hippocampe extends Projectile {
     private final double YINITIAL1,YINITIAL2,YINITIAL3;
 
     private final double TEMPSCREATION;
-    private double x2,x3,y2,y3;
+    private double y2,y3;
     public Hippocampe(double x, double y) {
         super(x, y);
-        x2=x;
-        x3=x;
         y2=y;
         y3=y;
         this.YINITIAL1 =y;
@@ -31,18 +29,25 @@ public class Hippocampe extends Projectile {
 
     @Override
     public void update(double dt) {
+        x=dt * vx;
+        y=calculY();
+        y2=calculY();
+        y3=calculY();
+
+    }
+
+    private double calculY() {
         var r = new Random();
-        x = dt * vx;
         int sensY = r.nextInt(0, 2);
         if (sensY == 0)
             sensY = -1;
-        y = (r.nextDouble(30, 60) * sensY) * Math.sin(2 * Math.PI * (System.nanoTime() * 1e-9 - TEMPSCREATION) / r.nextInt(1, 4)) + YINITIAL1;
-
+         return  (r.nextDouble(30, 60) * sensY) * Math.sin(2 * Math.PI * (System.nanoTime() * 1e-9 - TEMPSCREATION) / r.nextInt(1, 4)) + YINITIAL1;
     }
 
     @Override
     public void draw(GraphicsContext context) {
-
-
+        context.drawImage(image,x,y);
+        context.drawImage(image,x,y2);
+        context.drawImage(image,x,y3);
     }
 }

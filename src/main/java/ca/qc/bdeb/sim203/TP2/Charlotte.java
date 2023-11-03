@@ -16,7 +16,6 @@ public class Charlotte extends ObjetDuJeu {
     protected int vie;
 
     public Charlotte() {
-        this.arme= new Etoiles();
         this.vie = 4;
         this.bouge = false;
         this.isInvinsible = false;
@@ -33,6 +32,7 @@ public class Charlotte extends ObjetDuJeu {
         this.imageBlesse = new Image("charlotte-outch.png");
         this.imageMouvement = new Image("charlotte-avant.png");
     }
+    //TODO  in a method attack generate de position of the current weapon
 
     @Override
     public void draw(GraphicsContext context) {
