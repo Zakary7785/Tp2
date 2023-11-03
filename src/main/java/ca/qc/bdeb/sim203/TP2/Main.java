@@ -27,15 +27,16 @@ import java.util.Random;
 public class Main extends Application {
     public static void main(String[] args) {
 
-       launch(args);
+        launch(args);
     }
-     public static final double WIDTH=900;
-     public static final double HEIGHT=520;
-     private Stage stage;
+
+    public static final double WIDTH = 900;
+    public static final double HEIGHT = 520;
+    private Stage stage;
 
     @Override
-    public void start(Stage stage)  {
-this.stage=stage;
+    public void start(Stage stage) {
+        this.stage = stage;
         /*
         Le fonctionnement que GITHUB
         if you want to get the latest code
@@ -48,9 +49,8 @@ this.stage=stage;
          */
         stage.setScene(setSceneMenu());
 
-        var logo= new Image("logo.png");
+        var logo = new Image("logo.png");
         // au lieu de tout mettre dans le animation timer , faire une classe niveau ou on update tout et qu'on dessine tout dedans comme ca on peut jsute call niveau.update et niveau.call
-
 
 
         stage.setTitle("Charlotte la Barbotte");
@@ -58,15 +58,16 @@ this.stage=stage;
         stage.setResizable(false);
         stage.show();
     }
-    public  Scene setSceneMenu(){
+
+    public Scene setSceneMenu() {
         var root = setPaneAvecBackground();
-        var scene= new Scene(root,WIDTH,HEIGHT);
-        var logo= new Image("logo.png");
-        var logoView= new ImageView(logo);
-        var jouer= new Button("Jouer!");
-        var info= new Button("Infos");
-        var zoneButton= new HBox();
-        zoneButton.getChildren().addAll(jouer,info);
+        var scene = new Scene(root, WIDTH, HEIGHT);
+        var logo = new Image("logo.png");
+        var logoView = new ImageView(logo);
+        var jouer = new Button("Jouer!");
+        var info = new Button("Infos");
+        var zoneButton = new HBox();
+        zoneButton.getChildren().addAll(jouer, info);
         zoneButton.setAlignment(Pos.BOTTOM_CENTER);
         root.setCenter(logoView);
         logoView.setFitWidth(460);
@@ -74,16 +75,16 @@ this.stage=stage;
         root.setBottom(zoneButton);
         zoneButton.setPadding(new Insets(10));
         scene.setOnKeyPressed(event -> {
-            if(event.getCode()== KeyCode.ESCAPE) {
+            if (event.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
 
 
-            }else if (event.getCode()==KeyCode.D){
+            } else if (event.getCode() == KeyCode.D) {
                 System.out.println("Mode débuggage");
             }
         });
-        jouer.setOnAction(event ->{
-            stage.setScene(setEcranDeJeu());
+        jouer.setOnAction(event -> {
+                    stage.setScene(setEcranDeJeu());
                 }
         );
         info.setOnAction(event -> stage.setScene(setSceneInfos(stage)));
@@ -91,99 +92,107 @@ this.stage=stage;
     }
 
     private static BorderPane setPaneAvecBackground() {
-        var root= new BorderPane();
-        root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"),null,null)));
+        var root = new BorderPane();
+        root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#2A7FFF"), null, null)));
         return root;
     }
-    public Scene setEcranDeJeu(){
-        var root= new Pane();
-        var scene= new Scene(root,WIDTH,HEIGHT);
-        var canvas= new Canvas(WIDTH,HEIGHT);
-        var context= canvas.getGraphicsContext2D();
+
+    public Scene setEcranDeJeu() {
+        var root = new Pane();
+        var scene = new Scene(root, WIDTH, HEIGHT);
+        var canvas = new Canvas(WIDTH, HEIGHT);
+        var context = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
-        var game= new Game();
+        var game = new Game();
         AnimationTimer timer = new AnimationTimer() {
-            private long lastTime= System.nanoTime();
+            private long lastTime = System.nanoTime();
+
             @Override
             public void handle(long now) {
-
-                    if (lastTime == 0) {
-                        lastTime = now;
-                        return;
-                    }
-                    double dt = (now - lastTime) * 1e-9;
-                    game.update(dt);
-                    context.clearRect(0,0,WIDTH,HEIGHT);
-                    context.setFill(game.getCurrentCouleur());
-                    context.fillRect(0,0,WIDTH,HEIGHT);
-                    game.draw(context);
-                    lastTime=now;
+                if(game.isFini()){
+                    game.lancerNiveau();
+                    game.setFini(false);
                 }
 
-            };
+                if (lastTime == 0) {
+                    lastTime = now;
+                    return;
+                }
+                double dt = (now - lastTime) * 1e-9;
+
+                game.update(dt);
+                context.clearRect(0, 0, WIDTH, HEIGHT);
+                context.setFill(game.getCurrentCouleur());
+                context.fillRect(0, 0, WIDTH, HEIGHT);
+                game.draw(context);
+                lastTime = now;
+                if(game.getCharlotte().getDroite()>=WIDTH)
+                    game.setFini(true);
+            }
+
+        };
         timer.start();
 
 
         scene.setOnKeyPressed(event -> {
-            if(event.getCode()== KeyCode.ESCAPE){
+            if (event.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(setSceneMenu());
-            timer.stop();
-            } else if (event.getCode()==KeyCode.D) {
+                timer.stop();
+            } else if (event.getCode() == KeyCode.D) {
                 System.out.println("mode débugage");
             } else {
-                Input.setKeyPressed(event.getCode(),true);
+                Input.setKeyPressed(event.getCode(), true);
             }
         });
-        scene.setOnKeyReleased(event -> Input.setKeyPressed(event.getCode(),false));
+        scene.setOnKeyReleased(event -> Input.setKeyPressed(event.getCode(), false));
 
- return scene;
+        return scene;
     }
 
 
-
-
-    public Scene setSceneInfos(Stage stage){
-        var root= setPaneAvecBackground();
-        var mainbox= new VBox();
+    public Scene setSceneInfos(Stage stage) {
+        var root = setPaneAvecBackground();
+        var mainbox = new VBox();
         mainbox.setSpacing(20);
         mainbox.setPadding(new Insets(20));
-        var lign1=new HBox();
-        var lign2= new HBox();
-        var lign3= new HBox();
-        var lign4= new HBox();
-        var lign5= new HBox();
-        var lign6= new HBox();
-        formatTaille(lign1," Charlotte la Barbotte",50.0);
-        var r= new Random();
-        var rnd=r.nextInt(1,6);
-        var imagePoisson= new Image("poisson"+rnd+".png");
-        var imageVPoisson= new ImageView(imagePoisson);
+        var lign1 = new HBox();
+        var lign2 = new HBox();
+        var lign3 = new HBox();
+        var lign4 = new HBox();
+        var lign5 = new HBox();
+        var lign6 = new HBox();
+        formatTaille(lign1, " Charlotte la Barbotte", 50.0);
+        var r = new Random();
+        var rnd = r.nextInt(1, 6);
+        var imagePoisson = new Image("poisson" + rnd + ".png");
+        var imageVPoisson = new ImageView(imagePoisson);
         imageVPoisson.setPreserveRatio(true);
-        imageVPoisson.setFitWidth(WIDTH/5);
+        imageVPoisson.setFitWidth(WIDTH / 5);
         lign2.getChildren().add(imageVPoisson);
         lign2.setAlignment(Pos.CENTER);
-        formatTaille(lign3,"Par",15);
-        formatTaille(lign3," Zakary Szekely",32);
-        formatTaille(lign4,"et",15);
-        formatTaille(lign4,"Numa Trachel-Bourbeau",32);
-        var flowDescrip= new TextFlow();
-        var descript= new Text(" Travail remis à Nicolas Hubertise. Graphismes adaptées de https://game-icons.net/ et de hhtps://openclipart.org/. Développé dans le cadre du cours 420-203-RE - Développement" +
+        formatTaille(lign3, "Par", 15);
+        formatTaille(lign3, " Zakary Szekely", 32);
+        formatTaille(lign4, "et", 15);
+        formatTaille(lign4, "Numa Trachel-Bourbeau", 32);
+        var flowDescrip = new TextFlow();
+        var descript = new Text(" Travail remis à Nicolas Hubertise. Graphismes adaptées de https://game-icons.net/ et de hhtps://openclipart.org/. Développé dans le cadre du cours 420-203-RE - Développement" +
                 " de programmes dans un environnement graphique, au Collège de Bois-de-Boulogne.");
         flowDescrip.getChildren().add(descript);
         lign5.getChildren().add(flowDescrip);
         lign5.setAlignment(Pos.CENTER_RIGHT);
-        var retour= new Button("Retour");
+        var retour = new Button("Retour");
         lign6.setAlignment(Pos.CENTER);
         lign6.getChildren().add(retour);
-        mainbox.getChildren().addAll(lign1,lign2,lign3,lign4,lign5,lign6);
+        mainbox.getChildren().addAll(lign1, lign2, lign3, lign4, lign5, lign6);
         root.setCenter(mainbox);
         retour.setOnAction(event -> stage.setScene(setSceneMenu()));
 
-        return new Scene(root,WIDTH,HEIGHT);
+        return new Scene(root, WIDTH, HEIGHT);
     }
-    private void formatTaille(HBox box,String s, double taille){
-        var t= new Text(s);
-        t.setFont(Font.font("Arial",FontWeight.BOLD,taille));
+
+    private void formatTaille(HBox box, String s, double taille) {
+        var t = new Text(s);
+        t.setFont(Font.font("Arial", FontWeight.BOLD, taille));
         box.getChildren().add(t);
         box.setAlignment(Pos.CENTER);
     }

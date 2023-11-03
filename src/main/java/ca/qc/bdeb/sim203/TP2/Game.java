@@ -15,8 +15,17 @@ public class Game {
     boolean fini;
     private Color currentCouleur;
     public Game() {
+        this.fini=true;
 
 
+    }
+
+    public boolean isFini() {
+        return fini;
+    }
+
+    public void setFini(boolean fini) {
+        this.fini = fini;
     }
 
     public void lancerNiveau() {
