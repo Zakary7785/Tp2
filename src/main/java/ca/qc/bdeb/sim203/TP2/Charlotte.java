@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 
 public class Charlotte extends ObjetDuJeu {
-    private Projectile arme;
+    private  Projectile arme;
     private final double VMAX;
     private final Image imageBlesse;
     private final Image imageMouvement;
@@ -16,6 +16,7 @@ public class Charlotte extends ObjetDuJeu {
     protected int vie;
 
     public Charlotte() {
+        this.arme=new Etoiles(x+w/2,y+h/2);
         this.vie = 4;
         this.bouge = false;
         this.isInvinsible = false;
@@ -31,8 +32,16 @@ public class Charlotte extends ObjetDuJeu {
         this.image = new Image("charlotte.png");
         this.imageBlesse = new Image("charlotte-outch.png");
         this.imageMouvement = new Image("charlotte-avant.png");
+
     }
-    //TODO  in a method attack generate de position of the current weapon
+
+    public void attaque(){
+        arme.setVisible(true);
+    }
+    public void nouvelleArme(){
+        //TODO method so you swap the current weapon
+
+    }
 
     @Override
     public void draw(GraphicsContext context) {

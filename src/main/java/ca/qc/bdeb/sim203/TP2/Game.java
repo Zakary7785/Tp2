@@ -15,6 +15,11 @@ public class Game {
     boolean fini;
     private Color currentCouleur;
     public Game() {
+
+
+    }
+
+    public void lancerNiveau() {
         Random r= new Random();
         this.currentCouleur= Color.hsb(r.nextDouble(190,271),0.84,1);
         this.charlotte = new Charlotte();
@@ -29,6 +34,7 @@ public class Game {
         this.vieBarre = 4;
         this.fini=false;
     }
+
     public void update(double dt){
         charlotte.update(dt);
         baril.update(dt);

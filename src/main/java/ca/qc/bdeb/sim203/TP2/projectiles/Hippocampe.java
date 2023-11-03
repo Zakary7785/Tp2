@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim203.TP2.projectiles;
 
+import ca.qc.bdeb.sim203.TP2.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
@@ -29,11 +30,13 @@ public class Hippocampe extends Projectile {
 
     @Override
     public void update(double dt) {
+        if(isVisible()){
         x=dt * vx;
         y=calculY();
         y2=calculY();
-        y3=calculY();
-
+        y3=calculY();}
+        if(getDroite()> Main.WIDTH&&isVisible())
+            setVisible(false);
     }
 
     private double calculY() {
@@ -46,8 +49,9 @@ public class Hippocampe extends Projectile {
 
     @Override
     public void draw(GraphicsContext context) {
+        if(isVisible()){
         context.drawImage(image,x,y);
         context.drawImage(image,x,y2);
-        context.drawImage(image,x,y3);
+        context.drawImage(image,x,y3);}
     }
 }

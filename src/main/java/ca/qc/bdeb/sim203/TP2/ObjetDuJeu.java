@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 public abstract class ObjetDuJeu {
     protected double x,y,vy,vx,ax,ay;
-    protected int w,h;
+    protected double w,h;
 
     protected Image image;
 
