@@ -65,6 +65,10 @@ public class Charlotte extends ObjetDuJeu {
 
     }
 
+    public void setFiniNiveau(boolean finiNiveau) {
+        this.finiNiveau = finiNiveau;
+    }
+
     @Override
     public void update(double dt) {
         var left = Input.isKeyPressed(KeyCode.LEFT);
@@ -80,7 +84,7 @@ public class Charlotte extends ObjetDuJeu {
             vx = -vx / 2;
         }
         if (getDroite() > Main.WIDTH) {
-            //niveau completeeeeeeeeeeeeeeee
+            finiNiveau=true;
             x = 0;
         }
         if (getBas() > Main.HEIGHT) {

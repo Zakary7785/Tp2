@@ -20,6 +20,11 @@ public class Ennemi extends ObjetDuJeu {
         this.ay=0;
     }
 
+
+    public void setDead(boolean dead) {
+        this.dead = dead;
+    }
+
     @Override
     public void draw(GraphicsContext context) {
         if(!dead)
@@ -27,6 +32,10 @@ public class Ennemi extends ObjetDuJeu {
     }
     @Override
     public void update(double dt){
-        updatePhysique(dt);
+        if(!dead){
+            updatePhysique(dt);
+
+
+        }
     }
 }

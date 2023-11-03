@@ -105,14 +105,16 @@ public class Main extends Application {
         var context = canvas.getGraphicsContext2D();
         root.getChildren().add(canvas);
         var game = new Game();
+
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime = System.nanoTime();
+            private double tempAffichageNiveau=0.0;
 
             @Override
             public void handle(long now) {
                 if(game.isFini()){
                     game.lancerNiveau();
-                    game.setFini(false);
+                    tempAffichageNiveau=0;
                 }
 
                 if (lastTime == 0) {
@@ -120,6 +122,8 @@ public class Main extends Application {
                     return;
                 }
                 double dt = (now - lastTime) * 1e-9;
+                tempAffichageNiveau+=dt;
+                game.setShowLevelNumber(tempAffichageNiveau <= 4);
 
                 game.update(dt);
                 context.clearRect(0, 0, WIDTH, HEIGHT);
@@ -128,8 +132,11 @@ public class Main extends Application {
 
                 game.draw(context);
                 lastTime = now;
-                if(game.getCharlotte().getDroite()>=WIDTH)
+                if(game.getCharlotte().finiNiveau) {
                     game.setFini(true);
+                    game.getCharlotte().setFiniNiveau(false);
+
+                }
             }
 
         };
