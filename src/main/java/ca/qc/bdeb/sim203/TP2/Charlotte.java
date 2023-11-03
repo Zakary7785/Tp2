@@ -43,6 +43,14 @@ public class Charlotte extends ObjetDuJeu {
         this.arme = arme;
     }
 
+    public int getVie() {
+        return vie;
+    }
+
+    public void setVie(int vie) {
+        this.vie = vie;
+    }
+
     public void attaque(){
         arme.setX(getGauche()+w/2);
         arme.setY(getHaut()+h/2);

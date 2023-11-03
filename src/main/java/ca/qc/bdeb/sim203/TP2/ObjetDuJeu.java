@@ -17,6 +17,37 @@ public abstract class ObjetDuJeu {
         this.y = y;
     }
 
+    public double getVy() {
+        return vy;
+    }
+
+    public void setVy(double vy) {
+        this.vy = vy;
+    }
+
+    public double getVx() {
+        return vx;
+    }
+
+    public void setVx(double vx) {
+        this.vx = vx;
+    }
+
+    public double getAx() {
+        return ax;
+    }
+
+    public void setAx(double ax) {
+        this.ax = ax;
+    }
+
+    public double getAy() {
+        return ay;
+    }
+
+    public void setAy(double ay) {
+        this.ay = ay;
+    }
 
     public void update(double deltaTemps) {
         updatePhysique(deltaTemps);
