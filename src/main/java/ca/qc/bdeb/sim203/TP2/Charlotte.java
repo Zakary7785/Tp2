@@ -8,7 +8,7 @@ import javafx.scene.input.KeyCode;
 
 public class Charlotte extends ObjetDuJeu {
     private Projectile arme;
-    private double vMax;
+    private final double VMAX;
     private final Image imageBlesse;
     private final Image imageMouvement;
     protected boolean bouge, isInvinsible;
@@ -25,7 +25,7 @@ public class Charlotte extends ObjetDuJeu {
         this.y = ((Main.HEIGHT / 2) - h);
         this.vx = 0;
         this.vy = 0;
-        this.vMax = 300;
+        this.VMAX = 300;
         this.ax = 0;
         this.ay = 0;
         this.image = new Image("charlotte.png");
@@ -95,9 +95,9 @@ public class Charlotte extends ObjetDuJeu {
                 v = 0;
             }
         }
-        if (v > vMax)
+        if (v > VMAX)
             v = 300;
-        else if (v < -1 * vMax)
+        else if (v < -1 * VMAX)
             v = -300;
 
         if (moveX && (direction1 || direction2)) {//si on bouge en x et qu'on bouge
