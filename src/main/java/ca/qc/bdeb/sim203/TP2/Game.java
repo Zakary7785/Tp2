@@ -60,6 +60,10 @@ public class Game {
         this.fini = fini;
     }
 
+    public double getNewWave() {
+        return NewWave;
+    }
+
     public void lancerNiveau() {
         Random r= new Random();
         this.NewWave=0.75+ Math.sqrt(level);
@@ -85,6 +89,8 @@ public class Game {
 
 
         for (Ennemi e: poissonEnnemis) {
+            if(poissonEnnemis.isEmpty())
+                break;
             if(e.isDead()||e.isOutScreen())
                 poissonEnnemis.remove(e);
             if (e.getGauche()>charlotte.getArme().getDroite()&&charlotte.getArme().isSardine()){
