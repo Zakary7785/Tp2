@@ -94,6 +94,8 @@ public class Charlotte extends ObjetDuJeu {
         if (getDroite() > Main.WIDTH) {
             finiNiveau=true;
             x = 0;
+            vx=0;
+            ax=0;
         }
         if (getBas() > Main.HEIGHT) {
             y = Main.HEIGHT - h;

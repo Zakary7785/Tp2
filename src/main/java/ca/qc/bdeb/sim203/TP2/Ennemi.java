@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Ennemi extends ObjetDuJeu {
     private boolean dead;
+    private boolean outScreen;
     public Ennemi(int level) {
         Random r = new Random();
         this.image=new Image("poisson"+r.nextInt(1,6)+".png");
@@ -20,6 +21,17 @@ public class Ennemi extends ObjetDuJeu {
         this.ay=0;
     }
 
+    public boolean isOutScreen() {
+        return getGauche()<0||getHaut()<0||getBas()>Main.HEIGHT;
+    }
+
+    public void setOutScreen(boolean outScreen) {
+        this.outScreen = outScreen;
+    }
+
+    public boolean isDead() {
+        return dead;
+    }
 
     public void setDead(boolean dead) {
         this.dead = dead;
@@ -32,10 +44,9 @@ public class Ennemi extends ObjetDuJeu {
     }
     @Override
     public void update(double dt){
+
         if(!dead){
             updatePhysique(dt);
-
-
         }
     }
 }

@@ -109,7 +109,7 @@ public class Main extends Application {
         AnimationTimer timer = new AnimationTimer() {
             private long lastTime = System.nanoTime();
             private double tempAffichageNiveau=0.0;
-            private double tempAffichageGameOver=0.0;
+            private double tempAffichageGameOver=0;
 
             @Override
             public void handle(long now) {
@@ -128,7 +128,11 @@ public class Main extends Application {
                 double dt = (now - lastTime) * 1e-9;
                 tempAffichageNiveau+=dt;
                 game.setShowLevelNumber(tempAffichageNiveau <= 4);
-                if (tempAffichageGameOver<=3)
+                if(game.getLevel()==6){
+                    game.setFiniGame(true);
+                }
+
+                if (tempAffichageGameOver<=3&&game.isShowGameover())
                     game.setShowGameover(true);
                 else {
                     Input.setKeyPressed(KeyCode.ESCAPE, true);
@@ -141,11 +145,12 @@ public class Main extends Application {
                 context.fillRect(0, 0, WIDTH, HEIGHT);
 
                 game.draw(context);
-                lastTime = now;
+
                 if(game.getCharlotte().finiNiveau) {
                     game.setFini(true);
                     game.getCharlotte().setFiniNiveau(false);
                 }
+                lastTime = now;
 
             }
 
