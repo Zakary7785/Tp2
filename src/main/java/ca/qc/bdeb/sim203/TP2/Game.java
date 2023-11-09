@@ -17,7 +17,7 @@ public class Game {
     private boolean showLevelNumber;
 
     private Baril baril;
-    private double NewWave;
+    private double NewWaveTime;
     private ArrayList<Ennemi> poissonEnnemis;
     private int level=0;
 
@@ -60,19 +60,19 @@ public class Game {
         this.fini = fini;
     }
 
-    public double getNewWave() {
-        return NewWave;
+    public double getNewWaveTime() {
+        return NewWaveTime;
     }
 
     public void lancerNiveau() {
         Random r= new Random();
-        this.NewWave=0.75+ Math.sqrt(level);
         level +=1;
+        this.NewWaveTime=0.75+( 1/Math.sqrt(level));
         currentCouleur= Color.hsb(r.nextDouble(190,271),0.84,1);
 
         baril= new Baril();
         baril.setX(r.nextDouble(Main.WIDTH/5,(Main.WIDTH*4)/5));
-        poissonEnnemis= new ArrayList<>();//add space for the chosen projectile
+        poissonEnnemis= new ArrayList<>();
 
         for (int i = 0; i < r.nextInt(0,6); i++) {
             poissonEnnemis.add( new Ennemi(level));
@@ -86,23 +86,22 @@ public class Game {
             showGameover=true;
         charlotte.update(dt);
         baril.update(dt);
-
-
+        for (int i=poissonEnnemis.size()-1;i>0;i--) {
+            if (poissonEnnemis.get(i).isDead()||poissonEnnemis.get(i).isOutScreen())
+                poissonEnnemis.remove(i);
+        }
         for (Ennemi e: poissonEnnemis) {
-            if(poissonEnnemis.isEmpty())
-                break;
-            if(e.isDead()||e.isOutScreen())
-                poissonEnnemis.remove(e);
             if (e.getGauche()>charlotte.getArme().getDroite()&&charlotte.getArme().isSardine()){
                 calculForceElec(e);
             }
             e.update(dt);
         }
+
         charlotte.getArme().update(dt);
         //todo Methods check crash with projectile and check crash with charlotte probably crash charlotte barrel and if level is over by getting charlotte's fini niveau toggle
 
     }
-    public void NewVaguePoisson(){
+    public void newVaguePoisson(){
         Random r= new Random();
         for (int i=0;i<r.nextInt(0,6);i++) {
             poissonEnnemis.add(new Ennemi(level));

@@ -110,9 +110,11 @@ public class Main extends Application {
             private long lastTime = System.nanoTime();
             private double tempAffichageNiveau=0.0;
             private double tempAffichageGameOver=0;
+            private double  tempsDenvoieVaguePoisson=0.0;
 
             @Override
             public void handle(long now) {
+
                 if(game.isFini()){
                     game.lancerNiveau();
                     tempAffichageNiveau=0;
@@ -120,12 +122,20 @@ public class Main extends Application {
                 if (game.isShowGameover()){
                     tempAffichageGameOver=0;
                 }
-
                 if (lastTime == 0) {
                     lastTime = now;
                     return;
                 }
                 double dt = (now - lastTime) * 1e-9;
+                if (tempsDenvoieVaguePoisson>=game.getNewWaveTime()){
+                    System.out.println("new wave "+ tempsDenvoieVaguePoisson);
+                    tempsDenvoieVaguePoisson=0;
+                    game.newVaguePoisson();
+
+                }
+                else tempsDenvoieVaguePoisson+=dt;
+
+
                 tempAffichageNiveau+=dt;
                 game.setShowLevelNumber(tempAffichageNiveau <= 4);
                 if(game.getLevel()==6){

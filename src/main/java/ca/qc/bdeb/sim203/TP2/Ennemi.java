@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Ennemi extends ObjetDuJeu {
     private boolean dead;
-    private boolean outScreen;
     public Ennemi(int level) {
         Random r = new Random();
         this.image=new Image("poisson"+r.nextInt(1,6)+".png");
@@ -15,18 +14,13 @@ public class Ennemi extends ObjetDuJeu {
         this.w=(h*120)/104;
         this.y=r.nextDouble(Main.HEIGHT/5,Main.HEIGHT*4/5);
         this.x = Main.WIDTH -w;
-        this.vx= (100 *  Math.pow(level,0.33)) + 200;
+        this.vx=-((100 *  Math.pow(level,0.33)) + 200);
         this.vy= r.nextDouble(0,100) * r.nextInt(-1,2);
-        this.ax=-500;
         this.ay=0;
+        this.ax=-500;
     }
-
     public boolean isOutScreen() {
-        return getGauche()<0||getHaut()<0||getBas()>Main.HEIGHT;
-    }
-
-    public void setOutScreen(boolean outScreen) {
-        this.outScreen = outScreen;
+        return getDroite()<0||getBas()<0||getHaut()>Main.HEIGHT;
     }
 
     public boolean isDead() {
@@ -39,14 +33,10 @@ public class Ennemi extends ObjetDuJeu {
 
     @Override
     public void draw(GraphicsContext context) {
-        if(!dead)
             context.drawImage(image,x,y);
     }
     @Override
-    public void update(double dt){
-
-        if(!dead){
-            updatePhysique(dt);
-        }
+    public void update(double deltaTemps) {
+        super.update(deltaTemps);
     }
 }
