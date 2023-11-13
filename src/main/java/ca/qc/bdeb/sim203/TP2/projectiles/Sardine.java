@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 public class Sardine extends Projectile{
     public Sardine(double x, double y) {
         super(x, y);
-        this.image= new Image("sardine.png");
+        this.image= new Image("sardines.png");
         this.vx= 300;
         this.vy=0;
         this.ay=0;

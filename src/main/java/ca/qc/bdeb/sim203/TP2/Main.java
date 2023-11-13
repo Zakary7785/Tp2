@@ -111,6 +111,7 @@ public class Main extends Application {
             private double tempAffichageNiveau=0.0;
             private double tempAffichageGameOver=0;
             private double  tempsDenvoieVaguePoisson=0.0;
+             double lastAttack=0.0;
 
             @Override
             public void handle(long now) {
@@ -176,6 +177,9 @@ public class Main extends Application {
                 System.out.println("mode débugage");
             } else if (event.getCode()==KeyCode.SPACE) {
                 game.getCharlotte().attaque();
+                game.setCharlotteCooldown(true);
+
+
 
 
             } else {

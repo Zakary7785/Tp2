@@ -1,7 +1,9 @@
 package ca.qc.bdeb.sim203.TP2;
 
 import ca.qc.bdeb.sim203.TP2.projectiles.Etoiles;
+import ca.qc.bdeb.sim203.TP2.projectiles.Hippocampe;
 import ca.qc.bdeb.sim203.TP2.projectiles.Projectile;
+import ca.qc.bdeb.sim203.TP2.projectiles.Sardine;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -41,6 +43,7 @@ public class Charlotte extends ObjetDuJeu {
 
     public void setArme(Projectile arme) {
         this.arme = arme;
+        //todo make charlotte weapon a array list of weapons and clear when you swap them
     }
 
     public int getVie() {
@@ -49,6 +52,7 @@ public class Charlotte extends ObjetDuJeu {
 
     public void setVie(int vie) {
         this.vie = vie;
+        //todo when charlotte gets hurt
     }
 
     public void attaque(){
@@ -56,10 +60,7 @@ public class Charlotte extends ObjetDuJeu {
         arme.setY(getHaut()+h/2);
         arme.setVisible(true);
     }
-    public void nouvelleArme(){
-        //TODO method so you swap the current weapon
 
-    }
 
     @Override
     public void draw(GraphicsContext context) {

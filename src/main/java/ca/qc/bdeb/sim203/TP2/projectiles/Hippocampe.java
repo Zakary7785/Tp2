@@ -7,7 +7,7 @@ import javafx.scene.image.Image;
 import java.util.Random;
 
 public class Hippocampe extends Projectile {
-    private final double YINITIAL1,YINITIAL2,YINITIAL3;
+    private final double YINITIAL;
 
     private final double TEMPSCREATION;
     private double y2,y3;
@@ -15,9 +15,7 @@ public class Hippocampe extends Projectile {
         super(x, y);
         y2=y;
         y3=y;
-        this.YINITIAL1 =y;
-        this.YINITIAL2 =y;
-        this.YINITIAL3 =y;
+        this.YINITIAL =y;
         this.TEMPSCREATION = System.nanoTime() * 1e-9;
         this.image = new Image("hippocampe.png");
         this.vx = 500;
@@ -31,12 +29,20 @@ public class Hippocampe extends Projectile {
     @Override
     public void update(double dt) {
         if(isVisible()){
-        x=dt * vx;
-        y=calculY();
-        y2=calculY();
-        y3=calculY();}
+        x+=dt * vx;
+        y+=calculY();
+        y2+=calculY();
+        y3+=calculY();
+            System.out.println(y);
+            System.out.println(y2);
+            System.out.println(y3);
+            System.out.println();
+
+
+        }
         if(getDroite()> Main.WIDTH&&isVisible())
             setVisible(false);
+
     }
 
     private double calculY() {
@@ -44,7 +50,7 @@ public class Hippocampe extends Projectile {
         int sensY = r.nextInt(0, 2);
         if (sensY == 0)
             sensY = -1;
-         return  (r.nextDouble(30, 60) * sensY) * Math.sin(2 * Math.PI * (System.nanoTime() * 1e-9 - TEMPSCREATION) / r.nextInt(1, 4)) + YINITIAL1;
+         return  (r.nextDouble(30, 60) * sensY) *( Math.sin(2 * Math.PI * (System.nanoTime() * 1e-9 - TEMPSCREATION) )/ r.nextInt(1, 4)) + YINITIAL;
     }
 
     @Override

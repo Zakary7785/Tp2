@@ -15,7 +15,7 @@ public class Game {
     private boolean showGameover;// quand on perd tous les vies
     private boolean finiGame;//quand on fini tous les niveaux du jeu
     private boolean showLevelNumber;
-
+    private boolean CharlotteCooldown;
     private Baril baril;
     private double NewWaveTime;
     private ArrayList<Ennemi> poissonEnnemis;
@@ -30,6 +30,14 @@ public class Game {
         this.showGameover=false;
         this.finiGame=false;
 
+    }
+
+    public boolean isCharlotteCooldown() {
+        return CharlotteCooldown;
+    }
+
+    public void setCharlotteCooldown(boolean charlotteCooldown) {
+        CharlotteCooldown = charlotteCooldown;
     }
 
     public boolean isFiniGame() {
@@ -119,12 +127,11 @@ public class Game {
         double proportionY = deltaY / distance;
         double forceElectrique = 1000*100*-200/distanceExpo2;
         charlotte.getArme().setAx(charlotte.getAx()+(forceElectrique * proportionX));
-        charlotte.getArme().setAx(charlotte.getAy()+forceElectrique * proportionY);
+        charlotte.getArme().setAy(charlotte.getAy()+forceElectrique * proportionY);
     }
 
     public double distanceExpo2(double sardineX,double sardineY,double poissonX,double poissonY) {
         return  (Math.pow(sardineX-poissonX, 2) + Math.pow(sardineY - poissonY, 2));
-
         }
 
     public void draw(GraphicsContext context){
