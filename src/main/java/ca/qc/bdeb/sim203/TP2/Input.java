@@ -3,13 +3,18 @@ package ca.qc.bdeb.sim203.TP2;
 import javafx.scene.input.KeyCode;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Input {
-    private static HashMap<KeyCode,Boolean> input=new HashMap<>();
-    public static boolean isKeyPressed(KeyCode code) {
-        return input.getOrDefault(code, false);
+    private static final Map<KeyCode, Boolean> keyStates = new HashMap<>();
+
+    // Méthode synchronisée pour éviter des problèmes de concurrence
+    public static synchronized boolean isKeyPressed(KeyCode code) {
+        return keyStates.getOrDefault(code, false);
     }
-    public static void setKeyPressed(KeyCode code, boolean isPressed) {
-        input.put(code, isPressed);
+
+    // Méthode synchronisée pour éviter des problèmes de concurrence
+    public static synchronized void setKeyPressed(KeyCode code, boolean isPressed) {
+        keyStates.put(code, isPressed);
     }
 }
